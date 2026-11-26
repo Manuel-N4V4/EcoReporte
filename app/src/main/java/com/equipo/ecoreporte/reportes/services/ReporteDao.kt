@@ -11,9 +11,18 @@ interface ReporteDao {
     @Query("SELECT * FROM reportes_cache")
     suspend fun obtenerTodos(): List<ReporteEntity>
 
+    @Query("SELECT * FROM reportes_cache WHERE sincronizado = 0")
+    suspend fun obtenerPendientes(): List<ReporteEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertarTodos(reportes: List<ReporteEntity>)
 
-    @Query("DELETE FROM reportes_cache")
-    suspend fun limpiarCache()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertar(reporte: ReporteEntity)
+
+    @Query("DELETE FROM reportes_cache WHERE id = :id")
+    suspend fun eliminarPorId(id: String)
+
+    @Query("DELETE FROM reportes_cache WHERE sincronizado = 1")
+    suspend fun limpiarSincronizados()
 }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.equipo.ecoreporte.reportes.entities.ReporteEntity
 
-@Database(entities = [ReporteEntity::class], version = 1, exportSchema = false)
+@Database(entities = [ReporteEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun reporteDao(): ReporteDao
 
@@ -20,7 +20,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "ecoreporte_db"
-                ).build()
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
                 INSTANCE = instance
                 instance
             }

@@ -10,5 +10,6 @@ data class ReporteEntity(
     val descripcion: String,
     val categoria: String,
     val ubicacion: String,
-    val fecha: String
+    val fecha: String,
+    val sincronizado: Boolean = true
 )
